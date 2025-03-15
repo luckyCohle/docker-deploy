@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    container_name: my_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  todo-backend:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.be
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+
+  todo-websocket:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.ws
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  todo-frontend:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.fe
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:  

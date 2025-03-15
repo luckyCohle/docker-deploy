@@ -11,8 +11,8 @@
     "start:backend": "cd apps/http-server && npm run start && cd ../..",
     "start:ws": "cd apps/ws-server && npm run start && cd ../..",
     "build:web":"cd apps/web && npm run build && cd ../..",
-    "build:backend": "cd apps/http-server && npm run start && cd ../..",
-    "build:ws": "cd apps/ws-server && npm run start && cd ../..",
+    "build:backend": "cd apps/http-server && npm run build && cd ../..",
+    "build:ws": "cd apps/ws-server && npm run build && cd ../..",
     "db:generate":"cd packages/db && npx prisma generate &&  cd ../.."
   },
   "devDependencies": {

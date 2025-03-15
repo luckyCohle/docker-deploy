@@ -1,0 +1,26 @@
+name: Deploy to cloud
+on:
+  push:
+    branches: [main]
+
+jobs:
+  redeploy_everything:
+    runs-on: ubuntu-latest
+    name: Deploying everything to cloud with the help of docker
+    steps:
+      - name: checkout the code
+        uses: actions/checkout@v2
+
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker/Dockerfile.backend
+          push: true
+          tags: 100xdevs/user-app-backend:${{ github.sha }}
