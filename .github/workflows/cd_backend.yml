@@ -24,4 +24,4 @@ jobs:
           file: ./docker/Dockerfile.be
           push: true
           tags:
-            aayush2303/docker-deploy:${{ github.sha }}
+             aayush2303/docker-deploy:${{ github.sha }}
